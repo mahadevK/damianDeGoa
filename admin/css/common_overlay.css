@@ -1,0 +1,72 @@
+/*
+ * SimpleModal Basic Modal Dialog
+ * http://simplemodal.com
+ *
+ * Copyright (c) 2013 Eric Martin - http://ericmmartin.com
+ *
+ * Licensed under the MIT license:
+ *   http://www.opensource.org/licenses/mit-license.php
+ */
+
+#basic-modal-content {display:block;color: teal;}
+
+/* Overlay */
+#simplemodal-overlay {background-color:#000;}
+
+/* Container */
+#simplemodal-container {width:310px;color:#bbb; box-shadow:2px 3px 6px 4px #F0F0F0; padding:12px;}
+#simplemodal-container .simplemodal-data {padding:8px;}
+#simplemodal-container code {background:#141414; border-left:3px solid #65B43D; color:#bbb; display:block; font-size:12px; margin-bottom:12px; padding:4px 6px 6px;}
+#simplemodal-container a {color:#ddd;}
+#simplemodal-container a.modalCloseImg {background:url(../img/x.png) no-repeat; width:33px; height:36px; display:inline; z-index:3200; position:absolute; top:0px; right:-3px; cursor:pointer;}
+#simplemodal-container h3 {color:#84b8d9;}
+
+#opdPkLogin{
+margin:0 0 0;
+padding:0px;
+float:left;
+width:600px;
+}
+
+#opdPkLogin ul{
+margin:20px 0 0 80px;
+padding:0px;
+float:left;
+width:432px;
+}
+
+#opdPkLogin ul li{
+margin:0 0 0;
+padding:0px;
+float:left;
+font-size:16px;
+}
+
+.opdPkTextbox{
+margin:0 0 0;
+padding:0px;
+float:left;
+width:280px;
+height:20px;
+border:1px solid #69B8D9;
+}
+
+.opdPkBtn{
+margin:0 0 0;
+padding:5px;
+float:left;
+border:1px solid #69B8D9;
+border-radius:5px;
+cursor:pointer;
+}
+
+.opdPkErrormsg{
+float:left;
+padding: 0px;
+color: #DD4B39;
+line-height: 17px;
+margin: 0 0 0 80px;
+width:160px;
+}
+
+

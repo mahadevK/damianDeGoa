@@ -1,0 +1,291 @@
+ body {
+    background: none repeat scroll 0 0 #F0F0F0;
+    font-family: Aerial;
+    font-size: 12px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+} 
+ul li{
+	text-decoration:none;
+	/*display:inline;*/
+	list-style:none;
+}
+textarea{
+	resize:none;
+}
+a{
+	text-decoration:none;
+	color:#000;
+}
+/*--------------------------------- WRAPPER CSS -------------------------------------*/
+#wrapper{
+	margin:0 0 0 13.5%;
+	width:980px;
+	float:left;
+	background:#fff;
+}
+#mainWrapper{
+	float:left;
+	padding:0;
+	width:980px;
+	margin:0 auto;
+}
+/*--------------------------------- HEADER CSS -------------------------------------*/
+#headerDiv{
+	float:left;
+	margin:0;
+	padding:0;
+	width:980px;
+}
+#topHeader{
+	float:left;
+	margin:0;
+	padding:0;
+	width:980px;
+	height:20px;
+	background:#000;
+}
+#MiddleHeader{
+	float:left;
+	margin:0;
+	padding:0;
+	width:980px;
+}
+#bottomHeader{
+	float:left;
+	margin:0;
+	padding:0;
+	width:980px;
+}
+#logoContainer{
+	float:left;
+	margin:25px 30px 25px 30px;
+	padding:0;
+	width:920px;
+	background:#fff;
+}
+#logoDiv{
+	float:left;
+	margin:0;
+	padding:0;
+	width:400px;
+}
+#searchDiv{
+	float:left;
+	margin:0 0 0 10px;
+	padding:0;
+	width:280px;
+}
+#loginDiv{
+	float:left;
+	margin:0 0 0 10px;
+	padding:0;
+	width:220px;
+}
+#menuDiv{
+	float:left;
+	margin:0 30px 0 30px;
+	padding:0;
+	width:920px;
+	background:#fff;
+}
+#seperaterDiv{
+	float:left;
+	margin:0 30px 0 30px;
+	padding:0;
+	width:920px;
+	background:gray;
+	height:4px;
+}
+#menuUl{
+	float:left;
+	margin:0 0 0 30px;
+	padding:0;
+	width:860px;
+}
+#homeBody .home{
+	color:red;
+	border-left:1px solid #000;
+	border-top:1px solid #000;
+	border-right:1px solid #000;
+}
+#homeBody .home a{
+	color:red;
+}
+#shopBody .shop{
+	color:red;
+	border-left:1px solid #000;
+	border-top:1px solid #000;
+	border-right:1px solid #000;
+}
+#shopBody .shop a{
+	color:red;
+}
+
+.headerUl{
+	float:left;
+	margin:0;
+	padding:0;
+	width:260px;
+}
+.headerUl2{
+	float:left;
+	margin:0;
+	padding:0;
+	width:220px;
+	text-align:right;
+}
+/*--------------------------------- CONTAINER CSS -------------------------------------*/
+#mainContainerDiv{
+	float:left;
+	margin:0;
+	padding:0;
+	width:980px;
+}
+#mainSliderDiv{
+	float:left;
+	margin:25px 60px 25px 60px;
+	padding:0;
+	width:860px;
+	/*box-shadow: 0 5px 0 gray;*/
+}
+#slideOverlayDiv{
+	background: none repeat scroll 0 0 #000000;
+    height: 69px;
+    margin: -70px 0 0 0;
+    opacity: 0.36;
+    padding: 0;
+    position: absolute;
+    width: 860px;
+    z-index: 11;
+}
+#slideOverlayUl{
+	float:left;
+	margin:18px 80px 5px 80px;
+	padding:0;
+	width:700px;
+	color:#fff;
+	font-weight:bold;
+	font-size:14px;
+}
+#prodctSerchContainer{
+	float: left;
+    margin: 25px 0 0;
+    padding: 0;
+    width: 980px;
+}
+#prodctSerchUl{
+	display: inline;
+    float: left;
+    list-style: none outside none;
+    margin: 0 40px;
+    padding: 0;
+    width: 940px;
+}
+#productMainContner{
+	float: left;
+    margin: 25px 0;
+    padding: 0;
+    width: 980px;
+}	
+#leftContainer{
+	float: left;
+    margin: 0;
+    min-height: 400px;
+    padding: 0;
+    width: 175px;
+}
+#leftLinks{
+	left: 50px;
+    list-style: none outside none;
+    margin: 149px 0 0 -475px;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 145px;
+	display:inline;
+}
+#prodctContainer{
+	float: left;
+    margin: 0 20px;
+    padding: 0;
+    width: 760px;
+}
+.serchTag{
+	background: none repeat scroll 0 0 #666666;
+    border: 1px solid #CCCCCC;
+    color: #FFFFFF;
+    font-size: 14px;
+    outline: 0 none;
+    padding: 4px 7px;
+}
+#viewCart{
+	background: url("../images/viewCart.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    height: 31px;
+    width: 97px;
+}
+#viewCrtLab a {
+    color: #FFFFFF;
+    margin: 0 0 0 5px;
+}
+/*--------------------------------- FOOTER CSS -------------------------------------*/
+#footerDiv{
+	float:left;
+	margin:0;
+	padding:0;
+	width:980px;
+}
+#footerContainer{
+	float:left;
+	margin:0 30px 0 30px;
+	padding:0;
+	width:920px;
+}
+#leftFtrDiv{
+	float:left;
+	margin:0;
+	padding:0;
+	width:336px;
+}
+#midFtrDiv{
+	float:left;
+	margin:0;
+	padding:0;
+	width:280px;
+}
+#rghtFtrDiv{
+	float:left;
+	margin:0;
+	padding:0;
+	width:280px;
+}
+.vertCleSpetr{
+	float:left;
+	margin:0 5px 0 5px;
+	padding:0;
+	width:2px;
+	height:40px;
+	background:gray;
+}
+.horzntlCleSpetr{
+	float:left;
+	margin:0 0 10px 0;
+	padding:0;
+	width:920px;
+	height:1px;
+	background:gray;
+}
+#followUsUl{
+	float:left;
+	margin:0;
+	padding:0;
+	width:300px;
+}
+.footerUl{
+	float:left;
+	margin:0;
+	padding:0;
+	width:260px;
+	text-align:center;
+}
