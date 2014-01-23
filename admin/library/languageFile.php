@@ -50,7 +50,6 @@
 		'ADD_PROD_SPEC'			=>	'New Specification',
 		'PROD_NME'				=>	'Product Name',
 		'PROD_PRCE'				=>	'Price',
-		'SIZE'					=>	'Size',
 		'PROD_STCK'				=>	'Stock',
 		'VEW_PROD_SPEC'			=>	'View Specification',
 		'CODE_LABL'				=>	'Code',
@@ -59,7 +58,6 @@
 		'PROD_STCK'				=>	'Stock',
 		'TAGS_MENU'				=>	'Tags',
 		'MATRAL_LABL'			=>	'Material',
-		'SIZE_LABL'				=>	'Size',
 		'PROD_DIMENS_LAB'		=>	'Diamension (Length*Breadth*Height)',
 		'PROD_WEGHT_LAB'		=>	'Weight',
 		'ADD_SIZE'				=>	'New Size',
@@ -97,6 +95,13 @@
 		'ADD_TAX'				=>	'Add Tax',
 		'VEW_TAX'				=>	'View Tax',
 		'TAX_V'					=>	'Value (%)',
+		'HAS_SUB_CAT'			=>	'Has Sub Category',
+		'SUBCATGRES'			=>	'Sub Category',
+		'ADD_SUBCATG'			=>	'New Sub Category',
+		'VEW_SUBCATG'			=>	'View Sub Category',
+		'SUBSUBCATGRES'			=>	'Sub Sub Category',
+		'ADD_SSUBCATG'			=>	'New Sub Sub Category',
+		'VEW_SSUBCATG'			=>	'View Sub Sub Category',
 	);
 		return $lang[$phrase];
 	}

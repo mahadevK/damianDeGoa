@@ -3,6 +3,7 @@
 	require_once ("library/config.php");
 	require_once ("library/functions.php");
 	sessionCheck();
+	
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -23,9 +24,15 @@
 			</style>
 		<![endif]-->
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="css/pagination.css"/>
 		<script type="text/javascript" src="scripts/jquery.min.js"></script>
 		<script type="text/javascript" src="scripts/advetiser.min.js"></script>
-		<script type="text/javascript" src="scripts/validate.js"></script>
+		<script type="text/javascript" src="scripts/script.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				getSubCategory(1);
+			});
+		</script>
 	</head>
 	<body>
 		<div class="navbar navbar-fixed-top">
@@ -36,7 +43,7 @@
 		<div class="content">
 			<div class="container">
 				<div class="page-header">
-					<h3><?echo lang('SIZE');?></h3>
+					<h3><?echo lang('SUBCATGRES');?></h3>
 				</div>
 				<div class="row-fluid">
 					<ul class="thumbnails">
@@ -44,27 +51,28 @@
 							<div class="thumbnail">
 								<div class="caption">
 									<h5 align="right" style="margin-right:10px">
-										<a href="Sizes.php"><? echo lang('VEW_SIZE');?></a>
+										<a href="newSubCategory.php"><? echo lang('ADD_SUBCATG');?></a>
 									</h5>
 								</div>
 								<div class="widget-content">
-									<table width="600px" align="center">
-										<tr height="30px"><td><span style="color:red;" id="sucessMsg"></span></td></tr>
-										<tr>
-											<td width="600px">
-												<?echo lang('SIZE');?> &nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp; 
-												<input type="text" name="size" id="size" style="width:450px">
-											</td>
-										</tr>
-										<tr height="25px;"></tr>
-										<tr>
-											<td align="center">
-												<input type="submit" name="submit" id="submit" value="Submit" onclick="return valSize()">&nbsp;&nbsp;&nbsp;&nbsp; 
-												<input name="Cancel" type="button" id="Cancel" value="Cancel" onclick="window.location.href='Sizes.php';" />
-												<img src="images/loading.gif" alt="" style="display:none" id="loadingImg"/>
-											</td>
-										</tr>
-									</table>
+									<div id="topHeaderDiv">
+										<div id="leftHeader"></div>
+										<div id="centerHeader">
+											<table style="margin:5px 0 0 0">
+												<tr>
+													<td width="235px" align="center"><b><?echo lang('CATGRES');?></b></td>
+													<td width="235px" align="center"><b><?echo lang('SUBCATGRES');?></b></td>
+													<td width="60px" align="center"><b><?echo lang('ACTN');?></b></td>
+												</tr>
+											</table>
+										</div>
+										<div id="rightHeader"></div>
+									</div>
+									<ul class="thumbnails">
+										<li class="span5" style="width:98%">
+											<div id="categoryReslt"><img src="images/loader.gif" style="margin:40px 0 0 200px;" alt=""/></div> 
+										</li>
+									</ul>
 								</div>
 								<div class="widget-footer"></div>
 							</div>

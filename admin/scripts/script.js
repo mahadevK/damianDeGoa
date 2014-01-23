@@ -257,7 +257,94 @@ function delCategory(catgId)
 		});
 	}
 }
-
+/*-------------------------------------- SUB CATEGORY SCRIPT ----------------------------------*/
+function getSubCategory(page) {
+	var data = "page="+page;
+	$.ajax({
+		url: "Ajax/listSubCategory.php",
+		type: "POST",
+		data: data,
+		cache: false,
+		success: function (data) {
+			if (!data) {
+                $('#categoryReslt').html('<label style="color:#cd0000;margin:250px">No Records Found</td></tr>');
+			} else {
+                $('#categoryReslt').html(data);
+			}
+		}
+	});
+}
+	
+$('#categoryReslt .subCatg li.active').live('click',function(){
+   var page = $(this).attr('p');
+   getSubCategory(page);
+});
+function delSubCatg(subcatgId)
+{
+	var msg = confirm('Are you sure you want to delete this Sub category ??');
+	if(!msg)
+	{
+		return false;
+	}
+	else
+	{
+		var data = "subcatgId="+subcatgId;
+		$.ajax({
+			url: "Ajax/delSubCatg.php",
+			type: "POST",
+			data: data,
+			cache: false,
+			success: function (data) {
+				alert(data);
+				getSubCategory(1);
+			}
+		});
+	}
+}
+/*-------------------------------------- SUB SUB CATEGORY SCRIPT ----------------------------------*/
+function getSubSubCategory(page) {
+	var data = "page="+page;
+	$.ajax({
+		url: "Ajax/listSubSubCategory.php",
+		type: "POST",
+		data: data,
+		cache: false,
+		success: function (data) {
+			if (!data) {
+                $('#categoryReslt').html('<label style="color:#cd0000;margin:250px">No Records Found</td></tr>');
+			} else {
+                $('#categoryReslt').html(data);
+			}
+		}
+	});
+}
+	
+$('#categoryReslt .subsubcatg li.active').live('click',function(){
+   var page = $(this).attr('p');
+   getSubSubCategory(page);
+});
+function delSSubCatg(SScatgId)
+{
+	var msg = confirm('Are you sure you want to delete this Sub category ??');
+	if(!msg)
+	{
+		return false;
+	}
+	else
+	{
+		var data = "SScatgId="+SScatgId;
+		$.ajax({
+			url: "Ajax/delSSubCatg.php",
+			type: "POST",
+			data: data,
+			cache: false,
+			success: function (data) {
+				alert(data);
+				getSubSubCategory(1);
+			}
+		});
+	}
+}
 /*----------------------------- PRODUCT SCRIPT -------------------------------*/
 function serchProd()
 {
@@ -310,53 +397,8 @@ function delProdct(prodId)
 		});
 	}
 }
-/*------------------------------------- SIZE SCRIPT ----------------------------------------------------*/
-function getSizes(page) {
-	var data = "page="+page;
-	$.ajax({
-		url: "Ajax/listSizes.php",
-		type: "POST",
-		data: data,
-		cache: false,
-		success: function (data) {
-			if (!data) {
-                $('#sizesReslt').html('<label style="color:#cd0000;margin:250px">No Records Found</td></tr>');
-			} else {
-                $('#sizesReslt').html(data);
-			}
-		}
-	});
-}
-	
-$('#sizesReslt .sizeList li.active').live('click',function(){
-   var page = $(this).attr('p');
-   getSizes(page);
-}); 
-function delSize(sizeId)
-{
-	var msg = confirm('Are you sure you want to delete this size ??');
-	if(!msg)
-	{
-		return false;
-	}
-	else
-	{
-		var data = "sizeId="+sizeId;
-		$.ajax({
-			url: "Ajax/deleteSize.php",
-			type: "POST",
-			data: data,
-			cache: false,
-			success: function (data) {
-				alert('Size deleted sucessfully');
-				getSizes(1);
-			}
-		});
-	}
-}
 
 /*------------------------------ MATERIAL SCIPT -------------------------------*/
-/*********************** Material Script **********************************/
 function getMaterial(page) {
 	var data = "page="+page;
 	$.ajax({

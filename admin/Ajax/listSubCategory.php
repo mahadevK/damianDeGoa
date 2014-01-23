@@ -2,6 +2,8 @@
 	if($_POST['page'])
 	{
 		require_once('../library/config.php');
+		session_start();
+		$userId			=	$_SESSION['userId'];
 		$page 			= 	$_POST['page'];
 		$cur_page 		= 	$page;
 		$page -= 	1;
@@ -13,18 +15,22 @@
 		$start 			= 	$page * $per_page;
 		$msg 			= 	"";
 		$del_flag		=	0;
-		$sql	= 	"SELECT size,id FROM sizes 
-					WHERE del_flag=0 ORDER BY id LIMIT $per_page OFFSET $start";
-		$stmt 	= 	mysql_query($sql);
+		$SCatgsql		= 	"SELECT cat_name,sub_category.sub_catg_name,sub_category.id
+							FROM sub_category 
+							INNER JOIN category ON category.cat_id=sub_category.cat_id
+							WHERE sub_category.del_flag=0 AND sub_category.added_by='".$userId."' LIMIT $per_page OFFSET $start";
+		$SCatgRes 		= 	mysql_query($SCatgsql);
+		$numRows		=	mysql_num_rows($SCatgRes);
 		$pageCnt = 0;
-		$msg .= "<div id='sizesReslt2'><table style='margin-left:16px'>";
-		if (mysql_num_rows($stmt) > 0) {
-			while ($row = mysql_fetch_assoc($stmt)) {
+		$msg .= "<div id='categoryReslt2'><table style='margin-left:16px'>";
+		if ($numRows > 0) {
+			while ($ScatRow	=	mysql_fetch_assoc($SCatgRes)) {
 				$pageCnt	=	$pageCnt + 1;
 				$msg .= "<tr>";
-				$msg .= "<td style='width:430px;text-align:center'>".$row['size']."</td>";
-				$msg .= "<td style='width:100px;text-align:center'>
-						<a href='javascript:void(0)' onclick='return delSize(".$row['id'].")'><img src='images/delete.gif' alit='' /></a></td>";
+				$msg .= "<td style='width:235px;text-align:center'>".$ScatRow['cat_name']."</td>";
+				$msg .= "<td style='width:235px;text-align:center'>".$ScatRow['sub_catg_name']."</td>";
+				$msg .= "<td style='width:60px;text-align:center'>
+						<a href='javascript:void(0)' onclick='return delSubCatg(".$ScatRow['id'].")'><img src='images/delete.gif' alit='' /></a></td>";
 				$msg .= "</tr><tr height='10px'></tr>";	
 			}
 		}
@@ -37,13 +43,15 @@
 		
 
 		/* **************************************** Query To Get Total Count Of result *********************************/
-		$query_pag_num 		= 	"SELECT id FROM sizes WHERE del_flag=0";
-		$stmntQ 			=	mysql_query($query_pag_num);
-		$count 				=	mysql_num_rows($stmntQ);
+		$query_pag_num 		= 	"SELECT sub_category.id FROM sub_category 
+									INNER JOIN category ON category.cat_id=sub_category.cat_id
+									WHERE sub_category.del_flag=0 AND sub_category.added_by='".$userId."'";
+		$query_Res 			=	mysql_query($query_pag_num);
+		$count				=	mysql_num_rows($query_Res);
 		$no_of_paginations 	= 	ceil($count / $per_page);
 		if($no_of_paginations > 0)
 		{
-			/*************** Calculating the starting and endign values for the page **********************/
+			/************************** Calculating the starting and endign values for the page ******************************************/
 			if ($cur_page >= 7) 
 			{
 				$start_loop = $cur_page - 3;
@@ -68,7 +76,7 @@
 					$end_loop = $no_of_paginations;
 			}
 			
-			$msg .= "<div class='sizeList'><ul>";
+			$msg .= "<div class='subCatg'><ul>";
 
 			//***************************** Enable First Button ************************************//
 			if ($first_btn && $cur_page > 1) 

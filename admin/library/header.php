@@ -49,14 +49,15 @@
 					<li class="dropdown" id="eventsMenu">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><? echo lang('PROD_MANG');?><b class="caret"></b></a>
 						<ul class="dropdown-menu" style="min-width:191px">
-							<li><a href="Sizes.php"><? echo lang('SIZE');?></a></li>
 							<li><a href="Material.php"><? echo lang('MATERIAL');?></a></li>
 							<li><a href="Units.php"><? echo lang('UNIT');?></a></li>
 							<li><a href="Categories.php"><? echo lang('CATGRES');?></a></li>
+							<li><a href="subCategories.php"><? echo lang('SUBCATGRES');?></a></li>
+							<li><a href="SubSubCategories.php"><? echo lang('SUBSUBCATGRES');?></a></li>
 							<li><a href="Products.php"><? echo lang('PRODCTS');?></a></li>
 							<li><a href="Specification.php"><? echo lang('SPECFCTN');?></a></li>
 							<li><a href="Offers.php"><? echo lang('OFFERS');?></a></li>
-							<li><a href="tags.php"><? echo lang('TAGS');?></a></li>
+							<!--<li><a href="tags.php"><? echo lang('TAGS');?></a></li>-->
 							<li><a href="tax.php"><? echo lang('TAX');?></a></li>
 						</ul> 
 					</li>

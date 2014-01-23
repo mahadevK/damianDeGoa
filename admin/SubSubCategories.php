@@ -3,6 +3,7 @@
 	require_once ("library/config.php");
 	require_once ("library/functions.php");
 	sessionCheck();
+	
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -29,7 +30,7 @@
 		<script type="text/javascript" src="scripts/script.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
-				getSizes(1);
+				getSubSubCategory(1);
 			});
 		</script>
 	</head>
@@ -42,25 +43,27 @@
 		<div class="content">
 			<div class="container">
 				<div class="page-header">
-					<h3><?echo lang('SIZE');?></h3>
+					<h3><?echo lang('SUBSUBCATGRES');?></h3>
 				</div>
 				<div class="row-fluid">
 					<ul class="thumbnails">
-						<li class="span4" style="width:60%;margin:0 0 0 20%">
+						<li class="span4" style="width:70%;margin:0 0 0 20%">
 							<div class="thumbnail">
 								<div class="caption">
 									<h5 align="right" style="margin-right:10px">
-										<a href="newSize.php"><? echo lang('ADD_SIZE');?></a>
+										<a href="newSubSubCategory.php"><? echo lang('ADD_SSUBCATG');?></a>
 									</h5>
 								</div>
 								<div class="widget-content">
 									<div id="topHeaderDiv">
 										<div id="leftHeader"></div>
-										<div id="centerHeader">
+										<div id="centerHeader" style="width:670px">
 											<table style="margin:5px 0 0 0">
 												<tr>
-													<td width="430px" align="center"><b><?echo lang('SIZE');?></b></td>
-													<td width="100px" align="center"><b><?echo lang('ACTN');?></b></td>
+													<td width="235px" align="center"><b><?echo lang('CATGRES');?></b></td>
+													<td width="235px" align="center"><b><?echo lang('SUBCATGRES');?></b></td>
+													<td width="235px" align="center"><b><?echo lang('SUBSUBCATGRES');?></b></td>
+													<td width="60px" align="center"><b><?echo lang('ACTN');?></b></td>
 												</tr>
 											</table>
 										</div>
@@ -68,7 +71,7 @@
 									</div>
 									<ul class="thumbnails">
 										<li class="span5" style="width:98%">
-											<div id="sizesReslt"><img src="img/loader.gif" style="margin:40px 0 0 200px;" alt=""/></div> 
+											<div id="categoryReslt" style="width:700px;"><img src="images/loader.gif" style="margin:40px 0 0 200px;" alt=""/></div> 
 										</li>
 									</ul>
 								</div>

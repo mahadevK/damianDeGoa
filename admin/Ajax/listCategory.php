@@ -15,7 +15,7 @@
 		$start 			= 	$page * $per_page;
 		$msg 			= 	"";
 		$del_flag		=	0;
-		echo $Catgsql		= 	"SELECT cat_name,cat_id FROM category 
+		$Catgsql		= 	"SELECT cat_name,cat_id FROM category 
 							WHERE del_flag=0 AND added_by=$userId ORDER BY cat_id LIMIT $per_page OFFSET $start";
 		$CatgRes 		= 	mysql_query($Catgsql);
 		$numRows		=	mysql_num_rows($CatgRes);

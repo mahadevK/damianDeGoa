@@ -443,7 +443,8 @@ function valCategory()
 	$('#submit').hide();
 	$('#Cancel').hide();
 	$('#loadingImg').show();
-	var dataStrng	=	'catgry='+catgry;
+	var rSubCatg	=	$("input:radio[name=RsubCatg]:checked").val();
+	var dataStrng	=	'catgry='+catgry+'&rSubCatg='+rSubCatg;
 	$.ajax({
 		type: "POST",
 		url: "Ajax/newCategory.php",
@@ -465,9 +466,140 @@ function valCategory()
 		}
 	});
 }
-
+/*----------------------------------- SUB CATEGORY VALIDATE SCRIPT ------------------------------*/
+function valSubCategory()
+{
+	var charstrng	=	/^[A-Za-z\s]+$/;
+	var catgry		=	$.trim($('select#catgry').val());
+	if(catgry == "")
+	{
+		alert('Please select category');
+		$('select#catgry').focus();
+		return false;
+	}
+	var subcatgry		=	$.trim($('input#Subcatgry').val());
+	if(subcatgry == "")
+	{
+		alert('Please enter sub category');
+		$('input#Subcatgry').focus();
+		return false;
+	}
+	if(!charstrng.test(subcatgry) ) 
+	{ 
+		alert("Please enter characters only");
+		$('input#Subcatgry').focus();
+		return false;
+	}
+	$('#submit').hide();
+	$('#Cancel').hide();
+	$('#loadingImg').show();
+	var rSubCatg	=	$("input:radio[name=RsubCatg]:checked").val();
+	var dataStrng	=	'subcatgry='+subcatgry+'&rSubCatg='+rSubCatg+'&catgry='+catgry;
+	$.ajax({
+		type: "POST",
+		url: "Ajax/newSubCategory.php",
+		cache: false,
+		data:dataStrng,
+		success: function(data) { 	
+			if(data == 0)
+			{
+				alert('Similar Category already exist');
+				$('#loadingImg').hide();
+				$('#submit').show();
+				$('#Cancel').show();
+			}
+			else{
+				$('#loadingImg').hide();
+				alert('Sub Category added sucessfully');
+				window.location='subCategories.php';
+			}
+		}
+	});
+}
+/*-------------------------- SUB SUB CATEGORY SCRIPT -------------------------------*/
+function valSubSCategory()
+{
+	var charstrng	=	/^[A-Za-z\s]+$/;
+	var catgry		=	$.trim($('select#catgry').val());
+	if(catgry == "")
+	{
+		alert('Please select category');
+		$('select#catgry').focus();
+		return false;
+	}
+	var Subcatgry		=	$.trim($('select#Subcatgry').val());
+	if(Subcatgry == "")
+	{
+		alert('Please select sub category');
+		$('select#Subcatgry').focus();
+		return false;
+	}
+	var SubSubcatgry		=	$.trim($('input#SubSubcatgry').val());
+	if(SubSubcatgry == "")
+	{
+		alert('Please enter sub category');
+		$('input#SubSubcatgry').focus();
+		return false;
+	}
+	if(!charstrng.test(SubSubcatgry) ) 
+	{ 
+		alert("Please enter characters only");
+		$('input#SubSubcatgry').focus();
+		return false;
+	}
+	$('#submit').hide();
+	$('#Cancel').hide();
+	$('#loadingImg').show();
+	var dataStrng	=	'SubSubcatgry='+SubSubcatgry+'&Subcatgry='+Subcatgry+'&catgry='+catgry;
+	$.ajax({
+		type: "POST",
+		url: "Ajax/newSSubCategory.php",
+		cache: false,
+		data:dataStrng,
+		success: function(data) { 	
+			if(data == 0)
+			{
+				alert('Similar Category already exist');
+				$('#loadingImg').hide();
+				$('#submit').show();
+				$('#Cancel').show();
+			}
+			else{
+				$('#loadingImg').hide();
+				alert('Sub Category added sucessfully');
+				window.location='SubSubCategories.php';
+			}
+		}
+	});
+}
+function loadSubCatg()
+{
+	var catgId = $('select#catgry').val();
+	if(catgId == "")
+	{
+		alert('Please select category');
+		$('select#catgry').focus();
+		return false;
+	}
+	else
+	{
+		$('#Subcatgry').hide();
+		$('#subCatgLdng').show();
+		var data = "catgId="+catgId;
+		$.ajax({
+			url: "Ajax/getSubCatg.php",
+			type: "POST",
+			data: data,
+			cache: false,
+			success: function (data) {
+				$('#Subcatgry').show();
+				$('#subCatgLdng').hide();
+				$('#Subcatgry').html(data);
+			}
+		});
+	}
+}
 /*--------------------------- PRODUCT VALIDATE SCRIPT ------------------------------------*/
-/******************************** Product Script **************************************/
 function checkOthrCatg(){
 	var catgry	=	$('select#catgry').val();
 	if(catgry == "999999")
@@ -736,43 +868,6 @@ function valSpecatn()
 				var susMsg	=	'Specification added sucessfully';
 				$('#sucessMsg').html(susMsg);
 				setTimeout("window.location='Specification.php'",800);
-			}
-		}
-	});
-}
-/*--------------------------- SIZE VALIDATE SCRIPT --------------------------------------------*/
-function valSize()
-{
-	var size	=	$.trim($('input#size').val());
-	if(size == "")
-	{
-		alert('Please enter size');
-		$('input#size').focus();
-		return false;
-	}
-	$('#submit').hide();
-	$('#Cancel').hide();
-	$('#loadingImg').show();
-	var dataStrng	=	'size='+size;
-	$.ajax({
-		type: "POST",
-		url: "Ajax/newSize.php",
-		cache: false,
-		data:dataStrng,
-		success: function(data) { 	
-			if(data == 0)
-			{
-				var susMsg	=	'Similar size already exist';
-				$('#sucessMsg').html(susMsg);
-				$('#loadingImg').hide();
-				$('#submit').show();
-				$('#Cancel').show();
-			}
-			else{
-				$('#loadingImg').hide();
-				var susMsg	=	'Size added sucessfully';
-				$('#sucessMsg').html(susMsg);
-				setTimeout("window.location='Sizes.php'",800);
 			}
 		}
 	});

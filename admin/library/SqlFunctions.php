@@ -22,6 +22,12 @@
 		$row 	= 	mysql_query($query);
 		return $row;
 	}
+	function subCategQuery($userId){
+		$query 	=	"SELECT sub_catg_name,id
+					FROM `sub_category` WHERE added_by = '".$userId."' AND del_flag=0";
+		$row 	= 	mysql_query($query);
+		return $row;
+	}
 	function getProductQuery($productId){
 		$productSql	=	"SELECT products.name,products.prod_descrptn,products.cat_id,products.stock_code,
 						prodct_images.main_img_path,prodct_images.front_img_path,prodct_images.back_img_path,prodct_images.side_img_path

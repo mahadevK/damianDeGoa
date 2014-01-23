@@ -3,7 +3,7 @@
 $host="localhost"; // Host name 
 $username="root"; // Mysql username 
 $password=""; // Mysql password 
-$db_name="damiandegoa"; // Database name  
+$db_name="damiandegoalive"; // Database name  
 /* 
  $host="localhost"; // Host name 
 $username="karbensc_mahadev"; // Mysql username 

@@ -46,21 +46,21 @@
 				</div>
 				<div class="row-fluid">
 					<ul class="thumbnails">
-						<li class="span4" style="width:75%;margin:0 0 0 10%">
+						<li class="span4" style="width:50%;margin:0 0 0 20%">
 							<div class="thumbnail">
 								<div class="caption">
-									<h5 align="right" style="margin-right:10px">
-										<a href="newRole.php"><? echo lang('ADD_ROLES');?></a>
-									</h5>
+									<!--<h5 align="right" style="margin-right:10px">
+										<a href="newRole.php"><? //echo lang('ADD_ROLES');?></a>
+									</h5>-->
 								</div>
 								<div class="widget-content">
 									<div id="topHeaderDiv">
 										<div id="leftHeader"></div>
-										<div id="centerHeader2">
+										<div id="centerHeader2" style="width:93%">
 											<table style="margin:.8% 0 0 0;width:100%">
 												<tr>
 													<td width="35%" align="center"><b><?echo lang('ROLES');?></b></td>
-													<td width="10%" align="center"><b><?echo lang('ACTN');?></b></td>
+													<!--<td width="10%" align="center"><b><?//echo lang('ACTN');?></b></td>-->
 												</tr>
 											</table>
 										</div>

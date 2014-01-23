@@ -2,8 +2,9 @@
 	require_once ("library/languageFile.php");
 	require_once ("library/config.php");
 	require_once ("library/functions.php");
+	require_once ("library/SqlFunctions.php");
 	sessionCheck();
-	
+	$userId			=	$_SESSION['userId'];	
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -38,7 +39,7 @@
 		<div class="content">
 			<div class="container">
 				<div class="page-header">
-					<h3><?echo lang('CATGRES');?></h3>
+					<h3><?echo lang('SUBCATGRES');?></h3>
 				</div>
 				<div class="row-fluid">
 					<ul class="thumbnails">
@@ -46,7 +47,7 @@
 							<div class="thumbnail">
 								<div class="caption">
 									<h5 align="right" style="margin-right:10px">
-										<a href="Categories.php"><? echo lang('VEW_CATG');?></a>
+										<a href="subCategories.php"><? echo lang('VEW_SUBCATG');?></a>
 									</h5>
 								</div>
 								<div class="widget-content">
@@ -57,7 +58,26 @@
 												<?echo lang('CATGRES');?></td>
 											<td width="20px">:</td>
 											<td width="430px">
-												<input type="text" name="catgry" id="catgry" style="width:430px">
+												<select id="catgry" name="catgry" style="width:430px">
+													<option value="">Select</option>
+												<?
+													$catgRes	=	categQuery($userId);
+													while($catgRow	=	mysql_fetch_array($catgRes))
+													{
+												?>
+														<option value="<? echo $catgRow['cat_id'] ?>"><? echo $catgRow['cat_name'] ?></option>
+												<?
+													}
+												?>
+											</td>
+										</tr>
+										<tr height="25px;"></tr>
+										<tr>
+											<td width="150px">
+												<?echo lang('SUBCATGRES');?></td>
+											<td width="20px">:</td>
+											<td width="430px">
+												<input type="text" name="Subcatgry" id="Subcatgry" style="width:430px">
 											</td>
 										</tr>
 										<tr height="25px;"></tr>
@@ -66,16 +86,16 @@
 												<?echo lang('HAS_SUB_CAT');?></td>
 											<td width="20px">:</td>
 											<td width="430px">
-												<input type="radio" class="radioBtnClass" name="RsubCatg" id="yes" value="1" checked>&nbsp;&nbsp;&nbsp;  Yes
+												<input type="radio" class="radioBtnClass" name="RsubCatg" id="yes" value="1">&nbsp;&nbsp;&nbsp;  Yes
 												&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 
-												<input type="radio" class="radioBtnClass" name="RsubCatg" id="no" value="0"> &nbsp;&nbsp;&nbsp;  No
+												<input type="radio" class="radioBtnClass" name="RsubCatg" id="no" value="0" checked> &nbsp;&nbsp;&nbsp;  No
 											</td>
 										</tr>
 										<tr height="25px;"></tr>
 										<tr>
 											<td align="center" colspan="3">
-												<input type="submit" name="submit" id="submit" value="Submit" onclick="return valCategory()">&nbsp;&nbsp;&nbsp;&nbsp; 
-												<input name="Cancel" type="button" id="Cancel" value="Cancel" onclick="window.location.href='Categories.php';" />
+												<input type="submit" name="submit" id="submit" value="Submit" onclick="return valSubCategory()">&nbsp;&nbsp;&nbsp;&nbsp; 
+												<input name="Cancel" type="button" id="Cancel" value="Cancel" onclick="window.location.href='subCategories.php';" />
 												<img src="images/loading.gif" alt="" style="display:none" id="loadingImg"/>
 											</td>
 										</tr>
