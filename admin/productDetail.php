@@ -15,17 +15,19 @@
 		$stockCode		=	$row['stock_code'];
 		$prodDescrptn	=	$row['prod_descrptn'];
 		$prodCode		=	$row['prod_code'];
+		$material		=	$row['material'];
+		$prod_diam1		=	$row['prod_diamension'];
+		$prod_diam2		=	explode('/',$prod_diam1);
+		$prod_diam		=	$prod_diam2[0].' '.$prod_diam2[1];
+		$prod_price		=	$row['prod_price'];
+		$prod_weight1	=	$row['prod_weight'];
+		$prod_weight2	=	explode('/',$prod_weight1);
+		$prod_weight	=	$prod_weight2[0].' '.$prod_weight2[1];
+		$prod_discount	=	$row['prod_discount'];
+		$stock			=	$row['stock'];
 		if($row['main_img_path'] != ""){ $proMainImgPath	= $row['main_img_path']; }
 	}
 	
-	$ProdDetSql	=	"SELECT prod_specification.prod_price,prod_specification.prod_discount,prod_specification.prod_height,
-					prod_specification.prod_width,prod_specification.prod_weight,prod_specification.available_stock,
-					sizes.size,material.name
-					FROM prod_specification 
-					LEFT OUTER JOIN sizes ON prod_specification.size_id=sizes.id
-					LEFT OUTER JOIN material ON prod_specification.material_id=material.id
-					WHERE prod_specification.del_flag=0 AND prod_specification.prod_id=$prodID";
-	$stmt2 		= 	mysql_query($ProdDetSql);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -106,54 +108,25 @@
 													<table id="prodDetails2">
 														<tr>
 															<td width="22%" align="center"><b>Material</b></td>
-															<td width="13%" align="center"><b>Size</b></td>
 															<td width="13%" align="center"><b>Diamension</b></td>
 															<td width="13%" align="center"><b>Weight</b></td>
 															<td width="13%" align="center"><b>Price (Rs.)</b></td>
 															<td width="13%" align="center"><b>Discount (%)</b></td>
-															<td width="13%" align="center"><b>Stock Quant</b></td>
+															<td width="13%" align="center"><b>Stock</b></td>
 														</tr>
 													</table>
 												</div>
 												<div id="rightHeader"></div>
 												<div id="orderDetRes">
 												<table id="orderDetails2">
-												<?
-													if (mysql_num_rows($stmt2) > 0) {
-														while ($row2 = mysql_fetch_assoc($stmt2)){
-															$prodDiamsn		=	'--';
-															$prodWeght		=	'--';
-															$prodWeidth		=	$row2['prod_width'];
-															$prodHeight		=	$row2['prod_height'];
-															if($prodWeidth != "" && $prodHeight != "")
-															{
-																$prodDiamsn	=	$prodWeidth.'*'.$prodHeight;	
-															}
-															$prodWeight		=	$row2['prod_weight'];
-															if($prodWeight != "0")
-															{
-																$prodWeght	=	$prodWeight.'kg';
-															}	
-												?>
-														<tr>
-															<td width="22%" align="center"><? echo $row2['name']; ?></td>
-															<td width="13%" align="center"><? echo $row2['size']; ?></td>
-															<td width="13%" align="center"><? echo $prodDiamsn; ?></td>
-															<td width="13%" align="center"><? echo $prodWeght; ?></td>
-															<td width="13%" align="center"><? echo $row2['prod_price']; ?></td>
-															<td width="13%" align="center"><? echo $row2['prod_discount']; ?></td>
-															<td width="13%" align="center"><? echo $row2['available_stock']; ?></td>
-														</tr>
-												<?	
-														}
-													}
-													else
-													{
-												?>
-														<tr>
-															<td width="100%" style="text-align:center">No Specification found for this product</td>
-														</tr>
-												<?	}	?>
+													<tr>
+														<td width="22%" align="center"><? echo $material; ?></td>
+														<td width="13%" align="center"><? echo $prod_diam; ?></td>
+														<td width="13%" align="center"><? echo $prod_weight; ?></td>
+														<td width="13%" align="center"><? echo $prod_price; ?></td>
+														<td width="13%" align="center"><? echo $prod_discount; ?></td>
+														<td width="13%" align="center"><? echo $stock; ?></td>
+													</tr>
 												</table>
 												</div>
 											</div>

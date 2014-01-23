@@ -579,6 +579,7 @@ function loadSubCatg()
 	{
 		alert('Please select category');
 		$('select#catgry').focus();
+		$('#Subcatgry').html('<option value="">Select</option>');
 		return false;
 	}
 	else
@@ -599,20 +600,40 @@ function loadSubCatg()
 		});
 	}
 }
-/*--------------------------- PRODUCT VALIDATE SCRIPT ------------------------------------*/
-function checkOthrCatg(){
-	var catgry	=	$('select#catgry').val();
-	if(catgry == "999999")
+function loadSbSubCatg()
+{
+	var Subcatgry = $('select#Subcatgry').val();
+	if(Subcatgry == "")
 	{
-		$('#catGOthrTR').show();
+		alert('Please select Sub category');
+		$('select#Subcatgry').focus();
+		$('#SubSubcatgry').html('<option value="">Select</option>');
+		return false;
 	}
 	else
 	{
-		$('#catGOthrTR').hide();
+		$('#SubSubcatgry').hide();
+		$('#SsubCatgLdng').show();
+		var data = "Subcatgry="+Subcatgry;
+		$.ajax({
+			url: "Ajax/getSbSubCatg.php",
+			type: "POST",
+			data: data,
+			cache: false,
+			success: function (data) {
+				$('#SubSubcatgry').show();
+				$('#SsubCatgLdng').hide();
+				$('#SubSubcatgry').html(data);
+			}
+		});
 	}
 }
+/*--------------------------- PRODUCT VALIDATE SCRIPT ------------------------------------*/
 function valProdct()
 {
+	var numstrng	=	/^[0-9]+$/; 
+	var numstrngtwo	=	/^[-+]?[0-9]*\.?[0-9]*([eE][-+]?[0-9]+)?$/; 
+	var regexp 		= 	/^[0-9]+(\.[0-9]{1,2})?$/;
 	var catgry	=	$('select#catgry').val();
 	if(catgry == "")
 	{
@@ -620,15 +641,12 @@ function valProdct()
 		$('select#catgry').focus();
 		return false;
 	}
-	if(catgry == "999999")
+	var Subcatgry	=	$('select#Subcatgry').val();
+	if(Subcatgry == "")
 	{
-		var catgOthr	=	$.trim($('input#catGOthr').val());
-		if(catgOthr == "")
-		{
-			alert('Please enter other category');
-			$('input#catGOthr').focus();
-			return false;
-		}
+		alert('Please select sub category');
+		$('select#Subcatgry').focus();
+		return false;
 	}
 	var prodName	=	$.trim($('input#prodName').val());
 	if(prodName == "")
@@ -642,6 +660,45 @@ function valProdct()
 	{
 		alert('Please enter stock code');
 		$('input#stckCode').focus();
+		return false;
+	}
+	var prodPrice	=	$('input#prodPrice').val();
+	if(prodPrice == "")
+	{
+		alert('Please enter product price');
+		$('input#prodPrice').focus();
+		return false;
+	}
+	if(!numstrngtwo.test(prodPrice)) 
+	{ 
+		alert("Please enter numeric only");
+		$('input#prodPrice').focus();
+		return false;
+	}
+	if(!regexp.test(prodPrice) )
+	{
+		alert("Please enter only two decimal places");
+		$('input#prodPrice').focus();
+		return false;
+	}
+	var prodStck	=	$('input#prodStck').val();
+	if(prodStck == "")
+	{
+		alert('Please enter product stock');
+		$('input#prodStck').focus();
+		return false;
+	}
+	if(!numstrng.test(prodStck)) 
+	{ 
+		alert("Please enter integer value only");
+		$('input#prodStck').focus();
+		return false;
+	}
+	var prodAvalbty	=	$('select#prodAvalbty').val();
+	if(prodAvalbty == "")
+	{
+		alert('Please select product availability');
+		$('select#prodAvalbty').focus();
 		return false;
 	}
 	else{

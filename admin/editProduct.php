@@ -8,27 +8,36 @@
 	$msg	=	'';
 	if(isset($_POST['prodSub']) || isset($_POST['prodSub_x']))
 	{
-		$catGId	=	'';
-		$catGry	=	$_POST['catgry'];
-		if($catGry	==	'999999')
+		$catGId			=	$_POST['catgry'];
+		$Subcatgry		=	$_POST['Subcatgry'];
+		$SubSubcatgry	=	$_POST['SubSubcatgry'];
+		$prod_name		=	stripslashes($_POST['prodName']);
+		$prod_descrptn	=	stripslashes($_POST['prodDesc']);
+		$stock_code		=	stripslashes($_POST['stckCode']);
+		$prod_price		=	stripslashes($_POST['prodPrice']);
+		$prodStck		=	stripslashes($_POST['prodStck']);
+		$color_polish	=	stripslashes($_POST['colorpolish']);
+		$material		=	stripslashes($_POST['fabric']);
+		$prod_discount	=	stripslashes($_POST['prodDiscnt']);
+		$availablity	=	stripslashes($_POST['prodAvalbty']);
+		$prodWdth		=	stripslashes($_POST['prodWdth']);
+		$prodBth		=	stripslashes($_POST['prodBth']);
+		$prodHght		=	stripslashes($_POST['prodHght']);
+		$diamnUnit2		=	$_POST['diamnUnit2'];
+		$prodWeight		=	stripslashes($_POST['prodWeight']);
+		$wightUnit		=	$_POST['wightUnit'];
+		$prod_diamsion	=	'';
+		$prod_weight	=	'';
+		if($prodWdth != "")
 		{
-			$date		=	date('Y-m-d G:i:s');
-			/********************** Other Category Insert Query ******************************************/
-			$catGOthr	=	$_POST['catGOthr'];
-			$catGId		=	addCategory($catGOthr,$userId,$date);
-			
+			$prod_diamsion	=	$prodWdth.'*'.$prodBth.'*'.$prodHght.'/'.$diamnUnit2;
 		}
-		else{
-			$catGId	=	$catGry;
-		}	
+		$prod_weight	=	$prodWeight.'/'.$wightUnit;
+		
 		$prodID			=	$_POST['prodId'];
-		$prod_name		=	$_POST['prodName'];
-		$prod_descrptn	=	$_POST['prodDesc'];
-		$stock_code		=	$_POST['stckCode'];
-		$delFlag		=	0;
-		$updateDte		=	date('Y-m-d G:i:s');
+		
 		/*************************************** product insert Query *********************************************************/
-		$prodCtSql		=	updateProduct($prod_name,$prod_descrptn,$catGId,$stock_code,$updateDte,$prodID);
+		$prodCtSql		=	updateProduct($prod_name,$prod_descrptn,$stock_code,$prod_price,$prodStck,$color_polish,$material,$prod_discount,									$availablity,$prod_diamsion,$prod_weight,$prodID,$catGId,$Subcatgry,$SubSubcatgry);
 		
 		/*********************************** Products Images Insert Query *************************************/
 		$prod_main_img	=	'';
@@ -92,14 +101,28 @@
 	}
 	else
 	{
-		$productId	=	base64_decode($_REQUEST['prod']);
-		$delFlag	=	0;
-		$stmnt		=	getProductQuery($productId);
+		$productId		=	base64_decode($_REQUEST['prod']);
+		$delFlag		=	0;
+		$stmnt			=	getProductQuery($productId);
+		$prod_discount	=	0;
 		while ($row = mysql_fetch_assoc($stmnt)) {
-			$prod_name		=	$row['name'];
-			$prod_descrptn	=	$row['prod_descrptn'];
-			$cat_id			=	$row['cat_id'];
-			$stock_code		=	$row['stock_code'];
+			$prod_name			=	$row['name'];
+			$prod_descrptn		=	$row['prod_descrptn'];
+			$cat_id				=	$row['cat_id'];
+			$stock_code			=	$row['stock_code'];
+			$prod_price			=	$row['prod_price'];
+			$color_polish		=	$row['color_polish'];
+			$material			=	$row['material'];
+			$prod_discount		=	$row['prod_discount'];
+			$availablity		=	$row['availablity'];
+			$prod_diamension	=	$row['prod_diamension'];
+			$prod_weight		=	$row['prod_weight'];
+			$sub_catg_id		=	$row['sub_catg_id'];
+			$sub_sub_catg_id	=	$row['sub_sub_catg_id'];
+			$stock				=	$row['stock'];
+			$diam_one			=	explode('/',$prod_diamension);
+			$diam_two			=	explode('*',$diam_one[0]);
+			$wght_one			=	explode('/',$prod_weight);
 			if($row['main_img_path'] == ""){ $main_img_path = 'default.png';}else{ $main_img_path = $row['main_img_path']; }
 			if($row['front_img_path'] == ""){ $front_img_path = 'default.png';}else{ $front_img_path = $row['front_img_path']; }
 			if($row['back_img_path'] == ""){ $back_img_path = 'default.png';}else{ $back_img_path = $row['back_img_path']; }
@@ -192,10 +215,10 @@
 												<td width="120px"><?echo lang('CATGRES');?> <span>*</span></td>
 												<td style="width:30px">:</td>
 												<td style="width:420px">
-													<select id="catgry" name="catgry" onchange="return checkOthrCatg()">
+													<select id="catgry" name="catgry" onchange="return loadSubCatg()">
 														<option value="">Select</option>
 													<?
-														$catgRes	=	categQuery($userId);
+														$catgRes		=	categQuery($userId);
 														while ($catRow	=	mysql_fetch_assoc($catgRes)) {
 														
 															if($cat_id == $catRow['cat_id'])
@@ -211,14 +234,49 @@
 													<?
 														}
 													?>
-														<option value="999999">Other</option>
 													</select>
 												</td>
 											</tr>
 											<tr height="5px"></tr>
-											<tr style="display:none" id="catGOthrTR">
-												<td></td><td>:</td>
-												<td><input type="text" name="catGOthr" id="catGOthr"/></td>
+											<tr>
+												<td width="150px">
+													<?echo lang('SUBCATGRES');?> <span>*</span></td>
+												<td width="20px">:</td>
+												<td width="430px">
+													<img src="images/loading.gif" alt="" style="display:none;margin:0 0 0 187px" id="subCatgLdng"/>
+													<select id="Subcatgry" name="Subcatgry" onchange="return loadSbSubCatg()">
+														<option value="">Select</option>
+													<?
+														$ScatgRes		=	getSubCatg($sub_catg_id);
+														while ($ScatRow	=	mysql_fetch_assoc($ScatgRes)) {
+													?>
+														<option value="<? echo $ScatRow['id'];?>" selected><? echo $ScatRow['sub_catg_name'];?></option>
+													<?
+														}
+													?>
+														
+													</select>
+												</td>
+											</tr>
+											<tr height="5px;"></tr>
+											<tr>
+												<td width="150px">
+													<?echo lang('SUBSUBCATGRES');?></td>
+												<td width="20px">:</td>
+												<td width="430px">
+													<img src="images/loading.gif" alt="" style="display:none;margin:0 0 0 187px" id="SsubCatgLdng"/>
+													<select id="SubSubcatgry" name="SubSubcatgry">
+														<option value="">Select</option>
+													<?
+														$SScatgRes		=	getSubSubCatg($sub_sub_catg_id);
+														while ($SScatRow	=	mysql_fetch_assoc($SScatgRes)) {
+													?>
+														<option value="<? echo $SScatRow['id'];?>" selected><? echo $SScatRow['sub_catg_name'];?></option>
+													<?
+														}
+													?>
+													</select>
+												</td>
 											</tr>
 											<tr height="5px"></tr>
 											<tr>
@@ -237,6 +295,111 @@
 												<td><?echo lang('STCK_CDE');?> <span>*</span></td>
 												<td>:</td>
 												<td><input type="text" name="stckCode" id="stckCode" value="<?echo $stock_code ?>"/></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td><?echo lang('PROD_PRCE');?> <span>*</span></td>
+												<td>:</td>
+												<td><input type="text" name="prodPrice" id="prodPrice" style="width:300px" value="<?echo $prod_price ?>" /></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td><?echo lang('PROD_STCK');?> <span>*</span></td>
+												<td>:</td>
+												<td>
+													<input type="text" id="prodStck" name="prodStck" style="width:300px" value="<?echo $stock ?>" />
+												</td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td><?echo lang('COLOR_POLSH');?> </td>
+												<td>:</td>
+												<td><input type="text" name="colorpolish" id="colorpolish" style="width:300px" value="<?echo $color_polish ?>" /></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td width="150px"><?echo lang('MATRAL_LABL');?> </td>
+												<td style="width:20px">:</td>
+												<td style="width:430px">
+													<input type="text" name="fabric" id="fabric" style="width:300px" value="<?echo $material ?>" />
+												</td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td width="150px"><?echo lang('PROD_DECNT');?></td>
+												<td style="width:20px">:</td>
+												<td style="width:430px">
+													<input type="text" name="prodDiscnt" id="prodDiscnt" onchange="return calDiscntVal()" style="width:300px" value="<? echo $prod_discount ?>"/> %
+													&nbsp;&nbsp;<span id="discntVal" style="color:#000"></span>
+												</td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td width="150px"><?echo lang('PROD_AVABLTY');?> <span>*</span></td>
+												<td style="width:20px">:</td>
+												<td style="width:430px">
+													<select id="prodAvalbty" name="prodAvalbty">
+														<?
+															$sel1	=	'';
+															$sel2	=	'';
+															if($availablity == 0){$sel1='selected';}else{$sel2='selected';}
+														?>
+														<option value="">Select</option>
+														<option value="0" <? echo $sel1;?>>Available</option>
+														<option value="1" <? echo $sel2;?>>Unavailable</option>
+													</select>
+												</td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td width="150px"><?echo lang('PROD_DIMENS_LAB');?></td>
+												<td style="width:20px">:</td>
+												<td style="width:430px">
+												<?
+													$unitFor	=	1;
+													$unitSel	=	unitQuery($unitFor);
+												?>
+													<input type="text" name="prodWdth" id="prodWdth" style="width:40px" value="<? echo $diam_two[0]?>">
+													*&nbsp;&nbsp;&nbsp;
+													<input type="text" name="prodBth" id="prodBth" style="width:40px" value="<? echo $diam_two[1]?>">
+													*&nbsp;&nbsp;&nbsp;
+													<input type="text" name="prodHght" id="prodHght" style="width:40px" value="<? echo $diam_two[2]?>">
+													<select id="diamnUnit2" name="diamnUnit2" style="width:80px">
+														<option value="">Select</option>
+												<?
+													while($uRow3 = mysql_fetch_assoc($unitSel))
+													{
+														if($diam_one[1] == $uRow3['unit']){$dunitS	=	'selected';}else{$dunitS='';}
+														
+												?>
+														<option value="<? echo $uRow3['unit']; ?>" <? echo $dunitS;?>><? echo $uRow3['unit']; ?></option>
+												<?
+													}
+												?>
+													</select>
+												</td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td width="150px"><?echo lang('PROD_WEGHT_LAB');?></td>
+												<td style="width:20px">:</td>
+												<td style="width:430px">
+													<input type="text" name="prodWeight" id="prodWeight" style="width:126px" value="<? echo $wght_one[0] ?>">&nbsp;&nbsp;&nbsp;
+													<select id="wightUnit" name="wightUnit" style="width:128px">
+														<option value="">Select</option>
+												<?
+													$unitFor	=	2;
+													$unitSel2	=	unitQuery($unitFor);
+													while($uRow4 = mysql_fetch_assoc($unitSel2))
+													{
+														if($wght_one[1] == $uRow4['unit']){$WunitS	=	'selected';}else{$WunitS='';}
+												?>
+														<option value="<? echo $uRow4['unit']; ?>" <? echo $WunitS;?>><? echo $uRow4['unit']; ?></option>
+												<?
+													}
+												?>
+													</select>
+												</td>
 											</tr>
 											<tr height="15px"></tr>
 											<tr>

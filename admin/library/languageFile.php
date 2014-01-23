@@ -58,7 +58,7 @@
 		'PROD_STCK'				=>	'Stock',
 		'TAGS_MENU'				=>	'Tags',
 		'MATRAL_LABL'			=>	'Material',
-		'PROD_DIMENS_LAB'		=>	'Diamension (Length*Breadth*Height)',
+		'PROD_DIMENS_LAB'		=>	'Diamension (L*W*H)',
 		'PROD_WEGHT_LAB'		=>	'Weight',
 		'ADD_SIZE'				=>	'New Size',
 		'VEW_SIZE'				=>	'View Size',
@@ -102,6 +102,7 @@
 		'SUBSUBCATGRES'			=>	'Sub Sub Category',
 		'ADD_SSUBCATG'			=>	'New Sub Sub Category',
 		'VEW_SSUBCATG'			=>	'View Sub Sub Category',
+		'COLOR_POLSH'			=>	'Color/Polish',
 	);
 		return $lang[$phrase];
 	}

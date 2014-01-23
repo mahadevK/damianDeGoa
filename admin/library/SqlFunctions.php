@@ -30,7 +30,9 @@
 	}
 	function getProductQuery($productId){
 		$productSql	=	"SELECT products.name,products.prod_descrptn,products.cat_id,products.stock_code,
-						prodct_images.main_img_path,prodct_images.front_img_path,prodct_images.back_img_path,prodct_images.side_img_path
+						prodct_images.main_img_path,prodct_images.front_img_path,prodct_images.back_img_path,prodct_images.side_img_path,
+						products.prod_price,products.color_polish,products.material,products.prod_discount,products.availablity,
+						products.prod_diamension,products.prod_weight,products.sub_catg_id,products.sub_sub_catg_id,products.stock
 						FROM  products
 						INNER JOIN prodct_images ON products.prod_id=prodct_images.prodct_id
 						WHERE products.del_flag=0 AND products.prod_id=$productId";
@@ -40,7 +42,8 @@
 	function getProductDet($prodID)
 	{
 		$sql	= 	"SELECT category.cat_name,products.name,products.stock_code,products.prod_descrptn,
-				prodct_images.main_img_path,products.prod_code
+				prodct_images.main_img_path,products.prod_code,products.prod_price,products.prod_diamension,
+				products.prod_weight,products.prod_discount,products.material,products.stock
 				FROM products 
 				INNER JOIN category ON products.cat_id=category.cat_id
 				INNER JOIN prodct_images ON products.prod_id=prodct_images.prodct_id
@@ -61,10 +64,36 @@
 							WHERE prodct_id=$prodID";
 		$prodImgStmnt	=	mysql_query($prodImgSql);
 	}
-	function updateProduct($prod_name,$prod_descrptn,$catGId,$stock_code,$updateDte,$prodID)
+	function prodInsertQry($prodName,$prodCode,$stckCde,$prodDesc,$prodPrice,$prodStck,$colrpolish,$fabric,$prodDiscnt,
+							$prodAvbty,$prod_diamsion,$prod_weight,$catGId,$Subcatgry,$SubSubcatgry,$userId)
 	{
-		$prodCtSql		=	"UPDATE products SET name='".$prod_name."',prod_descrptn='".$prod_descrptn."',cat_id='".$catGId."',
-							stock_code='".$stock_code."',updated_date='".$updateDte."'
+		$addedDte	=	date('Y-m-d G:i:s');
+		$updateDte	=	'0000-00-00 0:0:0';
+		$prodCtSql		=	"INSERT INTO products (name,prod_code,stock_code,prod_descrptn,prod_price,stock,color_polish,material,
+													prod_discount,availablity,prod_diamension,prod_weight,cat_id,sub_catg_id,
+													sub_sub_catg_id,added_by,added_date,updated_date,del_flag)
+							VALUES('".$prodName."','".$prodCode."','".$stckCde."','".$prodDesc."','".$prodPrice."','".$prodStck."','".			$colrpolish."','".$fabric."','".$prodDiscnt."','".$prodAvbty."','".$prod_diamsion."','".$prod_weight.			"','".$catGId."','".$Subcatgry."','".$SubSubcatgry."','".$userId."','".$addedDte."',
+										'".$addedDte."',0)";
+		$prodCtStmnt	=	mysql_query($prodCtSql);
+		$prOdId 		= 	mysql_insert_id();
+		return $prOdId;
+	}
+	function InsertProdImg($prOdId,$prod_main_img,$prod_frnt_img,$prod_bck_img,$prod_sde_img)
+	{
+		$prodImgSql		=	"INSERT INTO prodct_images (prodct_id,main_img_path,front_img_path,back_img_path,side_img_path,del_flag)
+							VALUES('".$prOdId."','".$prod_main_img."','".$prod_frnt_img."','".$prod_bck_img."','".$prod_sde_img."',0)";
+		$prodImgStmnt	=	mysql_query($prodImgSql);
+	}
+	function updateProduct($prodName,$prodDesc,$stckCde,$prodPrice,$prodStck,$colrpolish,$fabric,$prodDiscnt,$prodAvbty,
+							$prod_diamsion,$prod_weight,$prodID,$catGId,$Subcatgry,$SubSubcatgry)
+	{
+		$updateDte		=	date('Y-m-d G:i:s');
+		$prodCtSql		=	"UPDATE products SET 
+								name='".$prodName."',prod_descrptn='".$prodDesc."',stock_code='".$stckCde."',
+								prod_price='".$prodPrice."',stock='".$prodStck."',color_polish='".$colrpolish."',
+								material='".$fabric."',prod_discount='".$prodDiscnt."',availablity='".$prodAvbty."',
+								prod_diamension='".$prod_diamsion."',prod_weight='".$prod_weight."',cat_id='".$catGId."',
+								sub_catg_id='".$Subcatgry."',sub_sub_catg_id='".$SubSubcatgry."',updated_date='".$updateDte."'
 							WHERE prod_id='".$prodID."'";
 		$prodCtStmnt	=	mysql_query($prodCtSql);
 	}
@@ -133,5 +162,18 @@
 		$custQry2	=	"SELECT name,id FROM customer WHERE del_flag=0";
 		$custRes2	=	mysql_query($custQry2);
 		return $custRes2;
+	}
+	function getSubCatg($sub_catg_id){
+		$query 	=	"SELECT sub_catg_name,id
+					FROM `sub_category` WHERE id = '".$sub_catg_id."' AND del_flag=0";
+		$row 	= 	mysql_query($query);
+		return $row;
+	}
+	function getSubSubCatg($subSubCatgId)
+	{
+		$query 	=	"SELECT sub_catg_name,id
+					FROM `sub_sub_category` WHERE id = '".$subSubCatgId."' AND del_flag=0";
+		$row 	= 	mysql_query($query);
+		return $row;
 	}
 ?>

@@ -8,33 +8,41 @@
 	$msg	=	'';
 	if(isset($_POST['prodSub']) || isset($_POST['prodSub_x']))
 	{
-		$catGId	=	'';
-		$userId		=	$_SESSION['userId'];
-		$date	=	date('Y-m-d');
-		$catGry	=	$_POST['catgry'];
-		if($catGry	==	'999999')
+		$userId			=	$_SESSION['userId'];
+		$date			=	date('Y-m-d');
+		$catGId			=	$_POST['catgry'];
+		$Subcatgry		=	$_POST['Subcatgry'];
+		$SubSubcatgry	=	$_POST['SubSubcatgry'];
+		$prodName		=	stripslashes($_POST['prodName']);
+		$prodDesc		=	stripslashes($_POST['prodDesc']);
+		$stckCde		=	stripslashes($_POST['stckCode']);
+		$prodPrice		=	stripslashes($_POST['prodPrice']);
+		$prodStck		=	stripslashes($_POST['prodStck']);
+		$colrpolish		=	stripslashes($_POST['colorpolish']);
+		$fabric			=	stripslashes($_POST['fabric']);
+		$prodDiscnt		=	stripslashes($_POST['prodDiscnt']);
+		$prodAvbty		=	stripslashes($_POST['prodAvalbty']);
+		$prodWdth		=	stripslashes($_POST['prodWdth']);
+		$prodBth		=	stripslashes($_POST['prodBth']);
+		$prodHght		=	stripslashes($_POST['prodHght']);
+		$diamnUnit2		=	$_POST['diamnUnit2'];
+		$prodWeight		=	stripslashes($_POST['prodWeight']);
+		$wightUnit		=	$_POST['wightUnit'];
+		$prod_diamsion	=	'';
+		if($prodWdth != "")
 		{
-			/********************** Other Category Insert Query ******************************************/
-			$catGOthr	=	$_POST['catGOthr'];
-			$catGId		=	addCategory($catGOthr,$userId,$date);
+			$prod_diamsion	=	$prodWdth.'*'.$prodBth.'*'.$prodHght.'/'.$diamnUnit2;
 		}
-		else{
-			$catGId	=	$catGry;
-		}
-		$prodName	=	$_POST['prodName'];
-		$prodDesc	=	$_POST['prodDesc'];
-		$stckCde	=	$_POST['stckCode'];
-		$delFlag	=	0;
-		$numchars2 	= 	rand(100,1000);
-		$prodCode 	= 	'PROD'.$numchars2;
+		$prod_weight	=	$prodWeight.'/'.$wightUnit;
+		$delFlag		=	0;
+		$numchars2 		= 	rand(100,1000);
+		$prodCode 		= 	'PROD'.$numchars2;
 		
-		$addedDte	=	date('Y-m-d G:i:s');
-		$updateDte	=	'0000-00-00 0:0:0';
+		
 		/*************************************** product insert Query *********************************************************/
-		$prodCtSql		=	"INSERT INTO products (name,prod_code,stock_code,prod_descrptn,cat_id,added_by,added_date,updated_date,del_flag)
-							VALUES('".$prodName."','".$prodCode."','".$stckCde."','".$prodDesc."','".$catGId."','".$userId."','".$addedDte."','".$addedDte."',0)";
-		$prodCtStmnt	=	mysql_query($prodCtSql);
-		$prOdId = mysql_insert_id();
+		$prOdId		=	prodInsertQry($prodName,$prodCode,$stckCde,$prodDesc,$prodPrice,$prodStck,$colrpolish,$fabric,$prodDiscnt,
+							$prodAvbty,$prod_diamsion,$prod_weight,$catGId,$Subcatgry,$SubSubcatgry,$userId);
+		
 		
 		/*********************************** Products Images Insert Query *************************************/
 		$prod_main_img	=	'';
@@ -66,10 +74,7 @@
 			$prod_sde_img 	= 	time()."_".strtolower($_FILES['prodSdeImg']['name']);
 			@move_uploaded_file($_FILES['prodSdeImg']['tmp_name'],"../images/products/".$prod_sde_img);
 		}
-		$prodImgSql		=	"INSERT INTO prodct_images (prodct_id,main_img_path,front_img_path,back_img_path,side_img_path,del_flag)
-							VALUES('".$prOdId."','".$prod_main_img."','".$prod_frnt_img."','".$prod_bck_img."','".$prod_sde_img."',0)";
-		$prodImgStmnt	=	mysql_query($prodImgSql);
-		
+		$prodImgSql		=	InsertProdImg($prOdId,$prod_main_img,$prod_frnt_img,$prod_bck_img,$prod_sde_img);
 		$msg	=	'Product sucessfully added';
 		echo  "<META HTTP-EQUIV=\"Refresh\" Content=\"1;URL=Products.php\">";
 	}
@@ -100,9 +105,6 @@
 			select{
 				width:307px;
 			}
-			textarea,input[type='text']{
-				width:300px;
-			}
 			textarea{
 				resize:none;
 			}
@@ -124,7 +126,7 @@
 				</div>
 				<div class="row-fluid">
 					<ul class="thumbnails">
-						<li class="span4" style="width:60%;margin:0 0 0 20%">
+						<li class="span4" style="width:70%;margin:0 0 0 15%">
 							<div class="thumbnail">
 								<div class="caption">
 									<h5 align="right" style="margin-right:10px">
@@ -136,10 +138,10 @@
 										<table width="600px" align="center">
 											<tr height="25px"><td colspan="3"><span id="sucessMsg"><? echo $msg;?></span></td></tr>
 											<tr>
-												<td width="120px"><?echo lang('CATGRES');?> <span>*</span></td>
-												<td style="width:30px">:</td>
-												<td style="width:420px">
-													<select id="catgry" name="catgry" onchange="return checkOthrCatg()">
+												<td width="150px"><?echo lang('CATGRES');?> <span>*</span></td>
+												<td style="width:20px">:</td>
+												<td style="width:430px">
+													<select id="catgry" name="catgry" onchange="return loadSubCatg()">
 														<option value="">Select</option>
 													<?
 														$catgRes	=	categQuery($userId);
@@ -149,56 +151,171 @@
 													<?
 														}
 													?>
-														<option value="999999">Other</option>
 													</select>
 												</td>
 											</tr>
 											<tr height="5px"></tr>
-											<tr style="display:none" id="catGOthrTR">
-												<td></td><td>:</td>
-												<td><input type="text" name="catGOthr" id="catGOthr"/></td>
+											<tr>
+												<td width="150px">
+													<?echo lang('SUBCATGRES');?> <span>*</span></td>
+												<td width="20px">:</td>
+												<td width="430px">
+													<img src="images/loading.gif" alt="" style="display:none;margin:0 0 0 187px" id="subCatgLdng"/>
+													<select id="Subcatgry" name="Subcatgry" onchange="return loadSbSubCatg()">
+														<option value="">Select</option>
+													</select>
+												</td>
 											</tr>
-											<tr height="5px"></tr>
+											<tr height="5px;"></tr>
+											<tr>
+												<td width="150px">
+													<?echo lang('SUBSUBCATGRES');?></td>
+												<td width="20px">:</td>
+												<td width="430px">
+													<img src="images/loading.gif" alt="" style="display:none;margin:0 0 0 187px" id="SsubCatgLdng"/>
+													<select id="SubSubcatgry" name="SubSubcatgry">
+														<option value="">Select</option>
+													</select>
+												</td>
+											</tr>
+											<tr height="25px;"></tr>
 											<tr>
 												<td><?echo lang('PROD_NME');?> <span>*</span></td>
 												<td>:</td>
-												<td><input type="text" name="prodName" id="prodName"/></td>
+												<td><input type="text" name="prodName" id="prodName" style="width:300px"/></td>
 											</tr>
 											<tr height="5px"></tr>
 											<tr>
 												<td><?echo lang('PROD_DESC');?></td>
 												<td>:</td>
-												<td><textarea type="text" name="prodDesc" id="prodDesc"></textarea></td>
+												<td><textarea type="text" name="prodDesc" id="prodDesc" style="width:300px"></textarea></td>
 											</tr>
 											<tr height="5px"></tr>
 											<tr>
 												<td><?echo lang('STCK_CDE');?> <span>*</span></td>
 												<td>:</td>
-												<td><input type="text" name="stckCode" id="stckCode" /></td>
+												<td><input type="text" name="stckCode" id="stckCode" style="width:300px" /></td>
 											</tr>
 											<tr height="5px"></tr>
 											<tr>
-												<td><?echo lang('PROD_MAIN_IMG');?></td>
+												<td><?echo lang('PROD_PRCE');?> <span>*</span></td>
 												<td>:</td>
-												<td><input type="File" name="prodMainImg" id="prodMainImg" /></td>
+												<td><input type="text" name="prodPrice" id="prodPrice" style="width:300px"/></td>
 											</tr>
 											<tr height="5px"></tr>
 											<tr>
-												<td><?echo lang('PROD_FRNT_IMG');?></td>
+												<td><?echo lang('PROD_STCK');?> <span>*</span></td>
 												<td>:</td>
-												<td><input type="File" name="prodFrntImg" id="prodFrntImg" /></td>
+												<td>
+													<input type="text" id="prodStck" name="prodStck" style="width:300px"/>
+												</td>
 											</tr>
 											<tr height="5px"></tr>
 											<tr>
-												<td><?echo lang('PROD_BCK_IMG');?></td>
+												<td><?echo lang('COLOR_POLSH');?> </td>
 												<td>:</td>
-												<td><input type="File" name="prodBckImg" id="prodBckImg" /></td>
+												<td><input type="text" name="colorpolish" id="colorpolish" style="width:300px"/></td>
 											</tr>
 											<tr height="5px"></tr>
 											<tr>
-												<td><?echo lang('PROD_SDE_IMG');?></td>
-												<td>:</td>
-												<td><input type="File" name="prodSdeImg" id="prodSdeImg" /></td>
+												<td width="150px"><?echo lang('MATRAL_LABL');?> </td>
+												<td style="width:20px">:</td>
+												<td style="width:430px">
+													<input type="text" name="fabric" id="fabric" style="width:300px"/>
+												</td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td width="150px"><?echo lang('PROD_DECNT');?></td>
+												<td style="width:20px">:</td>
+												<td style="width:430px">
+													<input type="text" name="prodDiscnt" id="prodDiscnt" value="0" onchange="return calDiscntVal()" style="width:300px"/> %
+													&nbsp;&nbsp;<span id="discntVal" style="color:#000"></span>
+												</td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td width="150px"><?echo lang('PROD_AVABLTY');?> <span>*</span></td>
+												<td style="width:20px">:</td>
+												<td style="width:430px">
+													<select id="prodAvalbty" name="prodAvalbty">
+														<option value="">Select</option>
+														<option value="0">Available</option>
+														<option value="1">Unavailable</option>
+													</select>
+												</td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td width="150px"><?echo lang('PROD_DIMENS_LAB');?></td>
+												<td style="width:20px">:</td>
+												<td style="width:430px">
+												<?
+													$unitFor	=	1;
+													$unitSel	=	unitQuery($unitFor);
+												?>
+													<input type="text" name="prodWdth" id="prodWdth" style="width:40px">
+													*&nbsp;&nbsp;&nbsp;
+													<input type="text" name="prodBth" id="prodBth" style="width:40px">
+													*&nbsp;&nbsp;&nbsp;
+													<input type="text" name="prodHght" id="prodHght" style="width:40px">
+													<select id="diamnUnit2" name="diamnUnit2" style="width:80px">
+														<option value="">Select</option>
+												<?
+													while($uRow3 = mysql_fetch_assoc($unitSel))
+													{
+												?>
+														<option value="<? echo $uRow3['unit']; ?>"><? echo $uRow3['unit']; ?></option>
+												<?
+													}
+												?>
+													</select>
+												</td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td width="150px"><?echo lang('PROD_WEGHT_LAB');?></td>
+												<td style="width:20px">:</td>
+												<td style="width:430px">
+													<input type="text" name="prodWeight" id="prodWeight" style="width:126px">&nbsp;&nbsp;&nbsp;
+													<select id="wightUnit" name="wightUnit" style="width:128px">
+														<option value="">Select</option>
+												<?
+													$unitFor	=	2;
+													$unitSel2	=	unitQuery($unitFor);
+													while($uRow4 = mysql_fetch_assoc($unitSel2))
+													{
+												?>
+														<option value="<? echo $uRow4['unit']; ?>"><? echo $uRow4['unit']; ?></option>
+												<?
+													}
+												?>
+													</select>
+												</td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td width="150px"><?echo lang('PROD_MAIN_IMG');?></td>
+												<td style="width:20px">:</td>
+												<td style="width:430px"><input type="File" name="prodMainImg" id="prodMainImg" /></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td width="150px"><?echo lang('PROD_FRNT_IMG');?></td>
+												<td style="width:20px">:</td>
+												<td style="width:430px"><input type="File" name="prodFrntImg" id="prodFrntImg" /></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td width="150px"><?echo lang('PROD_BCK_IMG');?></td>
+												<td style="width:20px">:</td>
+												<td style="width:430px"><input type="File" name="prodBckImg" id="prodBckImg" /></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td width="150px"><?echo lang('PROD_SDE_IMG');?></td>
+												<td style="width:20px">:</td>
+												<td style="width:430px"><input type="File" name="prodSdeImg" id="prodSdeImg" /></td>
 											</tr>
 											<tr height="25px;"></tr>
 											<tr>
