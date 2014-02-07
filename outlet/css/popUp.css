@@ -1,0 +1,130 @@
+#backgroundPopup {
+    background: none repeat scroll 0 0 #000000;
+    display: none;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 30;
+}
+.popupForm {
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 500px;
+}
+#toPopup {
+   /* background: none repeat scroll 0 0 #FFFFFF;*/
+    display: none;
+    left:43%;
+    position: absolute;
+    top: 45%;
+    width: 500px;
+    z-index: 140;
+}
+
+
+/*----------------------------- ORDER PRODUCT PAGE CSS ------------------------------------*/
+.prodOrderLDiv{
+	background: #D9D9D9;
+    float: left;
+    margin: 0;
+    padding: 0 0 25px;
+    width: 100%;
+}
+#prodOrdrHedrUl{
+	float: left;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+.ordrPMenuVisted {
+    background: url("../images/orderMenuV.png") no-repeat;
+    float: left;
+    height: 41px;
+    margin: 0;
+    padding: 0;
+    width: 170px;
+}
+.ordrPMenu {
+    background: url("../images/orderMenu.png") no-repeat;
+    float: left;
+    height: 32px;
+    margin: 0;
+    padding: 0;
+    width: 170px;
+	cursor:pointer;
+}
+.ordrPMenu2{
+	background:#98D6D7;
+	float: left;
+    height: 32px;
+    margin: 0;
+    padding: 0;
+    width: 535px;
+}
+.ordrPMenu3{
+	background: url("../images/viewCart.png") no-repeat #98D6D7;
+	float:left;
+	width:100px;
+	height:32px;
+	color:#fff;
+	font-size:14px;
+}
+.ordrPMenu3 a{
+	color:#fff;
+	font-size:14px;
+}
+#checkOutFormUl {
+    background:#FFFFFF;
+    float: left;
+    margin: 3% 0 0 5%;
+    padding: 0;
+    width: 95%;
+}
+
+#checkOutFormLi {
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+/*---------------------------------- MY CART PAGE CSS --------------------------------*/
+#myCartHeaderLeft {
+    background: url("../images/header_left.png") no-repeat;
+    float: left;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    width: 1.4%;
+}
+#myCartHeaderMid {
+    background: url("../images/header_centre.png") repeat-x;
+    float: left;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    width: 97.2%;
+}
+#myCartHeaderRght {
+    background: url("../images/header_right.png") no-repeat;
+    float: left;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    width: 1.4%;
+}
+#myCartResult2 {
+    border: 1px solid #000000;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 99.8%;
+}
+#myCartResultTab {
+    float: left;
+    margin: 1% 0 1% 1%;
+    padding: 0;
+    width: 98%;
+}

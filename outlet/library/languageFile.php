@@ -88,6 +88,10 @@
 		'VEW_TAX'				=>	'View Tax',
 		'TAX_V'					=>	'Value (%)',
 		'ADD_ORDER'				=>	'New Order',
+		'ORDER_FLOW'			=>	'Order Flow',
+		'EXST_PROD_MENU'		=>	'Exiting Product',
+		'SEMICUST_PROD_MENU'	=>	'Semi Customize',
+		'FULLCUST_PROD_MENU'	=>	'Full Customize',
 	);
 		return $lang[$phrase];
 	}

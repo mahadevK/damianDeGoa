@@ -22,6 +22,12 @@
 		$row 	= 	mysql_query($query);
 		return $row;
 	}
+	function categQuery2($userId){
+		$query 	=	"SELECT cat_name,cat_id
+					FROM `category` WHERE added_by = '".$userId."' AND del_flag=0 AND has_sub_cat=1";
+		$row 	= 	mysql_query($query);
+		return $row;
+	}
 	function subCategQuery($userId){
 		$query 	=	"SELECT sub_catg_name,id
 					FROM `sub_category` WHERE added_by = '".$userId."' AND del_flag=0";

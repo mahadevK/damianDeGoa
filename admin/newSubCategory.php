@@ -61,7 +61,7 @@
 												<select id="catgry" name="catgry" style="width:430px">
 													<option value="">Select</option>
 												<?
-													$catgRes	=	categQuery($userId);
+													$catgRes	=	categQuery2($userId);
 													while($catgRow	=	mysql_fetch_array($catgRes))
 													{
 												?>

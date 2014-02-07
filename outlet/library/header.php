@@ -23,7 +23,8 @@
 				<ul class="dropdown-menu" style="min-width:191px">
 					<li><a href="customers.php"><? echo lang('CUSTOMER');?></a></li>
 					<li><a href="customer_quotation.php"><? echo lang('QUATN');?></a></li>
-                    <li><a href="orders.php"><? echo lang('ORDER');?></a></li>
+                    <!--<li><a href="orders.php"><? echo lang('ORDER');?></a></li>-->
+					<li><a href="orderFlow.php"><? echo lang('ORDER');?></a></li>
 				</ul> 
 			</li>
 			<li class="dropdown">

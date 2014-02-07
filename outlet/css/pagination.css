@@ -38,3 +38,42 @@
     background-color: #006699;
     cursor: pointer;
 }
+/************************************** Product Pagination *****************************************/
+#productsReslt .prodVewPagn ul li.inactive,
+ #productsReslt .prodVewPagn ul li.inactive:hover{
+    background-color:#ededed;
+    color:#bababa;
+	border:1px solid #bababa;
+    cursor: default;
+}
+#productsReslt .data ul li{
+    list-style: none;
+    font-family: arial narrow;
+    margin: 5px 0 5px 0;
+    color: #000;
+    font-size: 12px;
+}
+#productsReslt .prodVewPagn{
+    width: 250px;
+    height: 30px;
+	float:right;
+	margin:25px 0 0 0;
+	padding:0;
+}
+#productsReslt .prodVewPagn ul li{
+    list-style: none;
+	float: left;
+    border: 1px solid #006699;
+    padding: 2px 6px 2px 6px;
+    margin: 0 3px 0 3px;
+    font-family: arial narrow;
+    font-size: 12px;
+    color: #006699;
+    font-weight: bold;
+    background-color: #f2f2f2;
+}
+#productsReslt .prodVewPagn ul li:hover{
+    color: #fff;
+    background-color: #006699;
+    cursor: pointer;
+}

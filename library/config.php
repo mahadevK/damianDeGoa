@@ -8,7 +8,7 @@ $db_name="damiandegoalive"; // Database name
  $host="localhost"; // Host name 
 $username="karbensc_mahadev"; // Mysql username 
 $password="U#B}cdvhwck}"; // Mysql password 
-$db_name="karbensc_damiandegoa"; // Database name   */
+$db_name="karbensc_damiandegoalive"; // Database name   */
 
 
 // Connect to server and select database.

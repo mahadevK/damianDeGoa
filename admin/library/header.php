@@ -22,21 +22,21 @@
 				if(isset($_SESSION['userType']) && $_SESSION['userType']==1)
 				{
 			?>
-				<li class="dropdown" id="eventsMenu">
-					<a href="adminList.php"><? echo lang('ADMIN_LIST');?></a>
-				</li>
+					<li class="dropdown" id="eventsMenu">
+						<a href="adminList.php"><? echo lang('ADMIN_LIST');?></a>
+					</li>
 			<?
 				}
 				else if(isset($_SESSION['userType']) && $_SESSION['userType']==2)
 				{
 			?>
-					<li class="dropdown" id="eventsMenu">
+					<!--<li class="dropdown" id="eventsMenu">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><? echo lang('ORDER');?><b class="caret"></b></a>
 						<ul class="dropdown-menu" style="min-width:191px">
-							<li><a href="customers.php"><? echo lang('CUSTOMER');?></a></li>
-							<li><a href="customer_quotation.php"><? echo lang('QUATN');?></a></li>
+							<li><a href="customers.php"><? //echo lang('CUSTOMER');?></a></li>
+							<li><a href="customer_quotation.php"><? //echo lang('QUATN');?></a></li>
 						</ul> 
-					</li>
+					</li>-->
 					<li class="dropdown" id="eventsMenu">
 						<a href="users.php"><? echo lang('USERS');?></a>
 					</li>
@@ -55,9 +55,9 @@
 							<li><a href="subCategories.php"><? echo lang('SUBCATGRES');?></a></li>
 							<li><a href="SubSubCategories.php"><? echo lang('SUBSUBCATGRES');?></a></li>
 							<li><a href="Products.php"><? echo lang('PRODCTS');?></a></li>
-							<li><a href="Specification.php"><? echo lang('SPECFCTN');?></a></li>
+							<!--<li><a href="Specification.php"><? //echo lang('SPECFCTN');?></a></li>-->
 							<li><a href="Offers.php"><? echo lang('OFFERS');?></a></li>
-							<!--<li><a href="tags.php"><? echo lang('TAGS');?></a></li>-->
+							<!--<li><a href="tags.php"><? //echo lang('TAGS');?></a></li>-->
 							<li><a href="tax.php"><? echo lang('TAX');?></a></li>
 						</ul> 
 					</li>

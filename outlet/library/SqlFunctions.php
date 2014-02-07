@@ -40,4 +40,22 @@
 		$stmt 	= 	mysql_query($sql);
 		return $stmt;
 	}
+	function getCartCount($customerId)
+	{
+		$getCartProdSql	=	"SELECT id FROM temp_orders WHERE cust_id=$customerId AND del_flag=0";	
+		$getCartProdRes	=	mysql_query($getCartProdSql);
+		$cartCount		=	mysql_num_rows($getCartProdRes);
+		return $cartCount;
+	}
+	function myCartData($customerId)
+	{
+		$mycartDataSql	=	"SELECT products.name,products.stock,temp_orders.item_qty,temp_orders.item_price,
+							temp_orders.prod_id,prodct_images.main_img_path,temp_orders.id
+							FROM temp_orders
+							INNER JOIN products ON products.prod_id=temp_orders.prod_id
+							INNER JOIN prodct_images ON products.prod_id=prodct_images.prodct_id
+							WHERE temp_orders.cust_id=$customerId AND temp_orders.del_flag=0";
+		$mycartDataRes	=	mysql_query($mycartDataSql);
+		return $mycartDataRes;
+	}
 ?>
